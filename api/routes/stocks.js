@@ -2,24 +2,24 @@ const express = require('express');
 const router = express.Router();
 
 
-const produtosController = require('../controllers/produtos');
+const stocksController = require('../controllers/stocks');
 
 
-router.get('/', (request, response) => {
-    produtosController.getAll(request, response);
+router.get('/:code', (request, response) => {
+    stocksController.getStock(request, response);
 });
 
-router.post('/', (request, response) => {
-    produtosController.create(request, response);
-})
+// router.post('/', (request, response) => {
+//     stocksController.create(request, response);
+// })
 
-router.put('/:id', (request, response) => {
-    produtosController.update(request, response);
-})
+// router.put('/:id', (request, response) => {
+//     stocksController.update(request, response);
+// })
 
-router.delete('/:id', (request, response) => {
-    produtosController.delete(request, response);
-})
+// router.delete('/:id', (request, response) => {
+//     stocksController.delete(request, response);
+// })
 
 
 module.exports = router;

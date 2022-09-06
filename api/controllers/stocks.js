@@ -1,67 +1,23 @@
+const axios = require("axios");
 const { Sequelize } = require('sequelize');
-const Produtos = require("../models/produtos");
+// const Produtos = require("../models/produtos");
 
 module.exports = {
 
-    async getAll(request, response) {
-        const sequelize = new Sequelize('banco_teste', 'root', '', {
-            host: 'localhost',
-            dialect: 'mysql'
-        });
-        const produtos = await Produtos(sequelize, Sequelize.DataTypes).findAll();
-        response.status(200).send({ produtos: produtos })
+    async getStock(request, response) {
+
+        let { code } = request.params;
+        code = code.toUpperCase();
+        console.log(code);
+
+        try {
+            const retorno = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${code}.SA&interval=5min&apikey=JPU4KXFBQN7XHC7I`);
+            return response.status(200).json({dados: retorno.data })
+
+        } catch (error) {
+            return response.status(200).send({ dados: error })
+        }
+
     },
 
-
-    async create(req, res) {
-        const sequelize = new Sequelize('banco_teste', 'root', '', {
-            host: 'localhost',
-            dialect: 'mysql'
-        });
-        const { nome, descricao } = req.body;
-        await Produtos(sequelize, Sequelize.DataTypes).create({
-            nome: nome,
-            descricao: descricao
-        })
-        res.status(201).send({
-            message: "Produto criado com sucesso"
-        });
-    },
-
-
-    async update(req, res) {
-        const sequelize = new Sequelize('banco_teste', 'root', '', {
-            host: 'localhost',
-            dialect: 'mysql'
-        });
-
-        const { nome, descricao } = req.body;
-
-        await Produtos(sequelize, Sequelize.DataTypes).update({
-            nome: nome,
-            descricao: descricao
-        }, { where: { id: req.params.id } })
-        res.status(201).send({
-            message: "Produto editado com sucesso"
-        });
-    },
-
-
-    async delete(req, res) {
-        const sequelize = new Sequelize('banco_teste', 'root', '', {
-            host: 'localhost',
-            dialect: 'mysql'
-        });
-
-        const { nome, descricao } = req.body;
-
-        await Produtos(sequelize, Sequelize.DataTypes).destroy(
-            {
-                where: { id: req.params.id }
-            }
-        )
-        res.status(201).send({
-            message: "Produto removido com sucesso"
-        });
-    }
 }
