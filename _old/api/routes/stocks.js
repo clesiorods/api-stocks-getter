@@ -9,6 +9,10 @@ router.get('/:code', (request, response) => {
     stocksController.getStock(request, response);
 });
 
+router.get('/my-stocks/:id', (request, response) => {
+    stocksController.getMyStocks(request, response);
+});
+
 // router.post('/', (request, response) => {
 //     stocksController.create(request, response);
 // })
