@@ -39,6 +39,10 @@ export class CreateDayPrices1662921974646 implements MigrationInterface {
                         type: "float"
                     },
                     {
+                        name: "date",
+                        type: "timestamp",
+                    },
+                    {
                         name: "created_at",
                         type: "timestamp",
                         default: "now()"

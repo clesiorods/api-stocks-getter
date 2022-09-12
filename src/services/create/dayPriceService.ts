@@ -13,30 +13,35 @@ interface IDayPrice {
 
 class CreateDayPriceService {
 
-    private dayPriceRepository: Repository<DayPrice>;
 
+    private dayPriceRepository: Repository<DayPrice>;
     constructor() {
         this.dayPriceRepository = dataSource.getRepository(DayPrice);
     }
+
 
     public async execute({ code, open, high, low, close, volume }: IDayPrice): Promise<DayPrice> {
         if (!code || !open || !high || !low || !close || !volume) {
             throw new Error("Dados incompletos");
         }
-        // console.log(code, open, high, low, close, volume)
-        const dayPrice = this.dayPriceRepository.create(
-            {
-                code,
-                open,
-                high,
-                low,
-                close,
-                volume
-            }
-        );
+        const dayPrice = this.dayPriceRepository.create({code,open,high,low,close,volume});
             await this.dayPriceRepository.save(dayPrice);
         return dayPrice;
     }
+
+
+    public async multInsert(arrayDados: IDayPrice[]): Promise<IDayPrice[]> {
+        await dataSource
+            .createQueryBuilder()
+            .insert()
+            .into(DayPrice)
+            .values(arrayDados)
+            .execute()
+
+        return arrayDados;
+    }
+
+    
 }
 
 export { CreateDayPriceService }

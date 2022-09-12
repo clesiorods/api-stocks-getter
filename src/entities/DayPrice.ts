@@ -25,6 +25,9 @@ export class DayPrice {
     volume: number
 
     @Column()
+    date: Date
+
+    @Column()
     created_at: Date
 
     @Column()
