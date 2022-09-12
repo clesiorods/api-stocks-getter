@@ -1,25 +1,28 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("Price")
+@Entity("day-prices")
 
-export class Price {
+export class DayPrice {
     @PrimaryGeneratedColumn()
     id: number
 
     @Column()
-    open: boolean
+    code: string
 
     @Column()
-    high: boolean
+    open: number
 
     @Column()
-    low: boolean
+    high: number
 
     @Column()
-    close: boolean
+    low: number
 
     @Column()
-    volume: boolean
+    close: number
+
+    @Column()
+    volume: number
 
     @Column()
     created_at: Date

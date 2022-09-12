@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
-import { Price } from "../entities/Price";
-import { CreatePrices1662828608137 } from "./migrations/1662828608137-CreatePrices";
+import { DayPrice } from "../entities/DayPrice";
+import { CreateDayPrices1662921974646 } from "./migrations/1662921974646-CreateDayPrices";
 
 const dataSource = new DataSource({
     type: "mysql",
@@ -11,10 +11,10 @@ const dataSource = new DataSource({
     database: "analitic_db",
     // synchronize: true,
     // logging: true,
-    entities: [Price],
+    entities: [DayPrice],
     // subscribers: [],
     migrations: [
-        CreatePrices1662828608137
+        CreateDayPrices1662921974646
     ],
 })
 
